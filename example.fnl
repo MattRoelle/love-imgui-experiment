@@ -81,26 +81,41 @@
     (love.graphics.print (or props.label "na") context.position.x context.position.y)
     state))
 
+;; Create and manage the state for your imgui components easily yourself
+(var button-state {})
+
 (fn love.draw []
   (layout #nil {:display :flex 
                 :padding (vec 0 0)}
-          [[view {:color [1 1 0 1] :padding (vec 10 10)
+          [[view {:color [1 1 0 1] 
+                  :padding (vec 10 10)
+                  :flex-direction :column
                   :display :flex}
-             [[view {:color [1 0 1 1]}] 
-              [view {:color [0 1 1 1]
-                     :display :flex} 
-               [[view {:color [0 1 0 1]}] 
-                [view {:color [0 1 0 1]}] 
-                [view {:color [0 1 0 1]}] 
-                [view {:color [0 1 0 1]}] 
-                [view {:color [0 1 0 1]}] 
-                [view {:color [0 1 0 1]}]]] 
-              [text {:text "Flex Layout" 
-                     :color [1 1 1 1]
-                     :align :left-center}]]] 
-           [view {:color [1 1 0 1] :padding (vec 10 10)
-                  :display :stack
-                  :direction :down} 
+            [[#(set button-state (button button-state $...)) 
+              {:label "Immediate mode, stateful button" :on-click #(print :clicked)}]
+             [view {:color [0 1 1 1]}]
+             [text {:text "Flex Layout" :color [1 1 1 1]}] 
+             [view {:color [0 1 1 1]}
+              [[view {:color [0 1 1 1] :display :flex} 
+                [[view {:color [0 1 0 1]}] 
+                 [view {:color [0 1 0 1]}] 
+                 [view {:color [0 1 0 1]}]]]]] 
+             [view {:color [0 1 1 1]}
+              [[view {:color [0 1 1 1] :display :flex} 
+                [[view {:color [0 1 0 1]}] 
+                 [view {:color [0 1 0 1]}] 
+                 [view {:color [0 1 0 1]}] 
+                 [view {:color [0 1 0 1]}] 
+                 [view {:color [0 1 0 1]}]]]]] 
+             [view {:color [0 1 1 1]}
+              [[view {:color [0 1 1 1] :display :flex} 
+                [[view {:color [0 1 0 1]}] 
+                 [view {:color [0 1 0 1]}] 
+                 [view {:color [0 1 0 1]}] 
+                 [view {:color [0 1 0 1]}] 
+                 [view {:color [0 1 0 1]}] 
+                 [view {:color [0 1 0 1]}]]]]]]] 
+           [view {:color [1 1 0 1] :padding (vec 10 10) :display :stack :direction :down} 
              [[view {:color [1 0 1 1] :size (vec 100 100)}]
               [view {:color [1 0 0 1] :size (vec 100 30)}]
               [view {:color [0 1 1 1] :size (vec 100 200)}]
